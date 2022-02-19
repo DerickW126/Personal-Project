@@ -47,8 +47,15 @@ class Game:
         return sen
 
     def reset(self):
+        self.typing = False
+        self.end = False
+        self.running = True
         self.input_text = ''
         self.show_text = ''
+        self.word = ''
+        self.used_time = 0
+        self.start_time = 0
+        self.res = 'START!'
         self.screen = pygame.display.set_mode((self.w,self.h))
         pygame.display.set_caption('Type Speed test')
         self.draw_text(self.screen, 'TYPE SPEED TEST', 90, 80, CYAN)
@@ -70,6 +77,8 @@ class Game:
                     cnt += 1
             except:
                 pass
+        if(len(s1) == 0):
+            return
         acc = cnt/len(s1)*100
         wpm = len(self.input_text)*60/(5*self.used_time)
         self.res = 'Time:'+str(round(self.used_time)) +" secs Accuracy:"+ str(round(acc)) + "%" + ' Wpm: ' + str(round(wpm))
@@ -77,7 +86,6 @@ class Game:
 
     def run(self):
         self.reset()
-        self.running = True
         while(self.running):
             self.screen.fill(BLACK, (50,250,650,50))
             pygame.draw.rect(self.screen, WHITE, (50,250,650,50), 2)
@@ -101,6 +109,8 @@ class Game:
                         if event.key == pygame.K_RETURN:
                             self.input_text = ''
                             self.end = True
+                            self.calc()
+                            self.draw_text(self.screen, "DONE!!!", self.h - 290, 50, MAGENTA)
                             self.draw_text(self.screen, "Reset", self.h - 70, 26, GRAY)
                         elif event.key == pygame.K_SPACE:
                             self.show_text = ''
