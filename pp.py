@@ -17,6 +17,7 @@ CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 class Game:
     def __init__(self):
+        self.screen = pygame.display.set_mode((750,500))
         self.w = 750
         self.h = 500
         self.typing = False
@@ -29,9 +30,7 @@ class Game:
         self.start_time = 0
         self.res = 'START!'
         pygame.init()
-        
-        self.screen = pygame.display.set_mode((self.w,self.h))
-        pygame.display.set_caption('Type Speed test')
+        pygame.display.set_caption('Type Test!')
         
     def draw_text(self, screen, msg, p ,fsize, color):
         font = pygame.font.Font('/Users/derick/Downloads/PP Files/Calibri Regular.ttf', fsize)
@@ -97,12 +96,13 @@ class Game:
                     sys.exit()
                 elif event.type == MOUSEBUTTONUP:
                     x, y = pygame.mouse.get_pos()
-                    if(x >= 50 and x <= 650 and y >= 250 and y <= 300): 
-                        self.typing = True
+                    if(x >= 60 and x <= 640 and y >= 250 and y <= 300): 
                         self.input_text = ''
                         self.show_text = ''
+                        self.typing = True
                         self.start_time = time.time()
-                    if(x >= 310 and x <= 510 and y >= 390 and self.end):
+                    if(x >= 300 and x <= 50 and y >= 400 and self.end):
+                        self.input_text = ''
                         self.reset()
                 elif event.type == pygame.KEYDOWN:
                     if self.typing and not self.end:
